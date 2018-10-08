@@ -38,17 +38,29 @@ class JokeTuto(object):
         hermes.publish_end_session(intent_message.session_id, "")
         
         # action code goes here...
-        print '[Received] intent: {}'.format(intent_message.intent.intent_name)
+        good_category = requests.get("https://api.chucknorris.io/jokes/categories").json();
+
+        category = None
+        if intent_message.slots.category:
+            category = intent_message.slots.category.first().value
+            # check if the category is valide
+            if category.encode("utf-8") not in good_category:
+                category = None
+
+        if category is None:
+            joke_msg = str(requests.get("https://api.chucknorris.io/jokes/random").json().get("value"))
+        else:
+            joke_msg = str(requests.get("https://api.chucknorris.io/jokes/random?category={}".format(category)).json().get("value"))
 
         # if need to speak the execution result by tts
-        hermes.publish_start_session_notification(intent_message.site_id, "Action1 has been done")
+        hermes.publish_start_session_notification(intent_message.site_id, joke_msg, "Joke_Tuto_APP")
 
     # More callback function goes here...
 
     # --> Master callback function, triggered everytime an intent is recognized
     def master_intent_callback(self,hermes, intent_message):
         coming_intent = intent_message.intent.intent_name
-        if coming_intent == 'coorfang:aksJoke':
+        if coming_intent == 'coorfang:askJoke':
             self.askJoke_callback(hermes, intent_message)
 
         # more callback and if condition goes here...
