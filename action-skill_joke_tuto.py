@@ -16,7 +16,7 @@ MQTT_IP_ADDR = "localhost"
 MQTT_PORT = 1883
 MQTT_ADDR = "{}:{}".format(MQTT_IP_ADDR, str(MQTT_PORT))
 
-class Template(object):
+class JokeTuto(object):
     """Class used to wrap action code with mqtt connection
         
         Please change the name refering to your application
@@ -71,4 +71,4 @@ class Template(object):
             h.subscribe_intents(self.master_intent_callback).start()
 
 if __name__ == "__main__":
-    Template()
+    JokeTuto()
