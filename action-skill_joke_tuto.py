@@ -38,7 +38,7 @@ class JokeTuto(object):
         hermes.publish_end_session(intent_message.session_id, "")
         
         # action code goes here...
-        good_category = requests.get("https://api.chucknorris.io/jokes/categories").json();
+        good_category = requests.get("https://api.chucknorris.io/jokes/categories").json()
 
         category = None
         if intent_message.slots.category:
