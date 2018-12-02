@@ -1,4 +1,5 @@
 ## snips-app-joke-tuto
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/CoorFun/snips-app-joke-tuto/blob/master/LICENSE)
 
 This is an example snips APP based on the [official python template]
 
