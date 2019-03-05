@@ -18,7 +18,7 @@ MQTT_ADDR = "{}:{}".format(MQTT_IP_ADDR, str(MQTT_PORT))
 
 class JokeTuto(object):
     """Class used to wrap action code with mqtt connection
-        
+
         Please change the name refering to your application
     """
 
@@ -31,17 +31,14 @@ class JokeTuto(object):
 
         # start listening to MQTT
         self.start_blocking()
-        
+
     # --> Sub callback function, one per intent
     def askJoke_callback(self, hermes, intent_message):
         # terminate the session first if not continue
-        hermes.publish_end_session(intent_message.session_id, "")
-        
-        # action code goes here...
         good_category = requests.get("https://api.chucknorris.io/jokes/categories").json()
 
         category = None
-        if intent_message.slots.category:
+        if intent_message.slots:
             category = intent_message.slots.category.first().value
             # check if the category is valide
             if category.encode("utf-8") not in good_category:
@@ -56,8 +53,7 @@ class JokeTuto(object):
         if new_people is not None and new_people is not "":
             joke_msg = joke_msg.replace('Chuck Norris', new_people)
 
-        # if need to speak the execution result by tts
-        hermes.publish_start_session_notification(intent_message.site_id, joke_msg, "Joke_Tuto_APP")
+        hermes.publish_end_session(intent_message.session_id, joke_msg)
 
     # More callback function goes here...
 
